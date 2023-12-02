@@ -5,7 +5,7 @@ import os
 
 
 
-csvpath = os.path.join("Pybank", "budget_data.csv")
+csvpath = os.path.join("/Users/jordanromnes/Desktop/python-challenge/Pybank/budget_data.csv")
 
 
 
@@ -21,22 +21,25 @@ greatest_decrease_amount = 0
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     header = next(csvreader, None)
-    previous_profit_loss = 0
+    previous_profit_loss = None
     
     for row in csvreader:
         total_months += 1
         total_profit_losses += int(row[1])
         profit_loss = int(row[1])
-        change_in_profit_loss = profit_loss - previous_profit_loss
-        changes_in_profit_losses.append(change_in_profit_loss)
-        if int(row[1]) > greatest_increase_amount:
-            greatest_increase_amount = int(row[1])
-            greatest_increase_date = row[0]
-        if int(row[1]) < greatest_decrease_amount:
-            greatest_decrease_amount = int(row[1])
-            greatest_decrease_date = row[0]
-        average_change = sum(changes_in_profit_losses) / (total_months - 1)
+        if previous_profit_loss is not None:
+            change_in_profit_loss = profit_loss - previous_profit_loss
+            changes_in_profit_losses.append(change_in_profit_loss)
 
+        if profit_loss > greatest_increase_amount:
+            greatest_increase_amount = profit_loss
+            greatest_increase_date = row[1]
+        if profit_loss < greatest_decrease_amount:
+            greatest_decrease_amount = profit_loss
+            greatest_decrease_date = row[1]
+
+        previous_profit_loss = profit_loss
+average_change = sum(changes_in_profit_losses) / (total_months - 1)
 
 print("Financial Analysis")
 print("----------------------------")
