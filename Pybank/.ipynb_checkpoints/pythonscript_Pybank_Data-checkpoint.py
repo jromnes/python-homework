@@ -3,13 +3,9 @@ import csv
 import os
 from pathlib import Path
 
-Path.cwd()
-
-
-
-csvpath = os.path.join("/Users/jordanromnes/Desktop/python-challenge/Pybank/budget_data.csv")
-
-
+csvpath = Path("budget_data.csv")
+# Alternative method
+# csvpath = os.path.join("budget_data.csv")
 
 total_months = 0
 total_profit_losses = 0
